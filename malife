@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Mon parcours linguistique</title>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.css" />
+<style>
+  :root {
+    --bg: #faf8f5;
+    --text: #2b2b2b;
+    --accent: #b5533c;
+    --card-bg: #ffffff;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-theme="light"]) {
+      --bg: #1c1b1a;
+      --text: #ececec;
+      --accent: #e08a6f;
+      --card-bg: #2a2827;
+    }
+  }
+  :root[data-theme="dark"] {
+    --bg: #1c1b1a;
+    --text: #ececec;
+    --accent: #e08a6f;
+    --card-bg: #2a2827;
+  }
+  * { box-sizing: border-box; }
+  body {
+    margin: 0;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+    background: var(--bg);
+    color: var(--text);
+  }
+  header {
+    padding: 1.2rem 1.5rem;
+  }
+  header h1 {
+    margin: 0 0 0.3rem 0;
+    font-size: 1.4rem;
+    color: var(--accent);
+  }
+  header p {
+    margin: 0;
+    opacity: 0.75;
+    font-size: 0.9rem;
+  }
+  #map {
+    width: 100%;
+    height: 70vh;
+    min-height: 400px;
+  }
+  .leaflet-popup-content-wrapper {
+    background: var(--card-bg);
+    color: var(--text);
+    border-radius: 8px;
+  }
+  .popup-title {
+    font-weight: 600;
+    color: var(--accent);
+    margin-bottom: 4px;
+  }
+  .popup-level {
+    display: inline-block;
+    font-size: 0.75rem;
+    background: var(--accent);
+    color: white;
+    padding: 2px 8px;
+    border-radius: 999px;
+    margin-top: 4px;
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <h1>🗺️ Mon parcours linguistique</h1>
+  <p>Exemple de carte interactive avec Leaflet.js — clique sur un marqueur</p>
+</header>
+
+<div id="map"></div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.js"></script>
+<script>
+  const map = L.map('map').setView([46.6, 2.5], 4);
+
+  L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+    attribution: '&copy; OpenStreetMap contributors',
+    maxZoom: 18,
+  }).addTo(map);
+
+  // Données d'exemple — à remplacer par tes propres étapes/langues
+  const points = [
+    {
+      lat: 48.8566, lng: 2.3522,
+      title: "Paris, France",
+      desc: "Licence LEA à Paris-Saclay",
+      level: "🇫🇷 Langue maternelle"
+    },
+    {
+      lat: 36.7213, lng: -4.4214,
+      title: "Málaga, Espagne",
+      desc: "Semestre Erasmus — immersion espagnole",
+      level: "🇪🇸 Avancé"
+    },
+    {
+      lat: 51.9607, lng: 7.6261,
+      title: "Münster, Allemagne",
+      desc: "Semestre Erasmus — perfectionnement allemand",
+      level: "🇩🇪 B2"
+    },
+    {
+      lat: 41.3874, lng: 2.1686,
+      title: "Barcelone, Espagne",
+      desc: "Contributions Tatoeba en catalan/espagnol",
+      level: "🌐 Traduction"
+    }
+  ];
+
+  points.forEach(p => {
+    const marker = L.marker([p.lat, p.lng]).addTo(map);
+    marker.bindPopup(`
+      <div class="popup-title">${p.title}</div>
+      <div>${p.desc}</div>
+      <span class="popup-level">${p.level}</span>
+    `);
+  });
+</script>
+
+</body>
+</html>
